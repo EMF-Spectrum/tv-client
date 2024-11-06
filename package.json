@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "license": "GPL-3.0-only",
+  "author": "EMF Spectrum Team",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
