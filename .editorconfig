@@ -1,6 +1,20 @@
-[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
+root = true
+
+[*]
 charset = utf-8
-indent_size = 2
-indent_style = space
+indent_size = 4
+indent_style = tab
 insert_final_newline = true
 trim_trailing_whitespace = true
+end_of_line = lf
+# Annoyingly you can't specify tab width for github and prettier without
+# enforcing it for everyone else too, sorry two space enthusiasts
+tab_width = 4
+
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_size = 2
+trim_trailing_whitespace = false
