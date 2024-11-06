@@ -16,19 +16,28 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
-
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+const currentPhaseText = "TODO";
 </script>
 
 <template>
-	<RouterView />
+	<h1 class="phase-tracker">{{ currentPhaseText }}</h1>
 </template>
 
-<style>
-#app {
-	height: 100%;
-	padding: 0;
-	margin: 0;
+<style lang="scss">
+@use "@/assets/sizes";
+
+.phase-tracker {
+	& {
+		text-align: center;
+		font-size: 160px;
+		font-weight: 500;
+		margin: 0;
+
+		line-height: sizes.$header-height;
+		height: sizes.$header-height;
+
+		white-space: nowrap;
+	}
 }
 </style>

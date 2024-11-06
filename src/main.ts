@@ -17,8 +17,6 @@
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import "./assets/main.css";
-
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";

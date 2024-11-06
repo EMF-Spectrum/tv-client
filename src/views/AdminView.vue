@@ -16,19 +16,20 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
+<script setup lang="ts">
+import { useBootstrap } from "@/composables/use-bootstap";
+
+useBootstrap();
+</script>
 
 <template>
-	<div class="about">
-		<h1>This is an about page</h1>
+	<div className="container">
+		<h1>TODO</h1>
 	</div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-	.about {
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-	}
+<style lang="css">
+body {
+	font-family: "Orbitron", sans-serif;
 }
 </style>

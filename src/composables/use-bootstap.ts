@@ -17,14 +17,13 @@
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { describe, it, expect } from "vitest";
+import { onMounted, onUnmounted } from "vue";
 
-import { mount } from "@vue/test-utils";
-import HelloWorld from "../HelloWorld.vue";
-
-describe("HelloWorld", () => {
-	it("renders properly", () => {
-		const wrapper = mount(HelloWorld, { props: { msg: "Hello Vitest" } });
-		expect(wrapper.text()).toContain("Hello Vitest");
+export function useBootstrap() {
+	onMounted(() => {
+		document.getElementById("bootstrap-css")?.removeAttribute("disabled");
 	});
-});
+	onUnmounted(() => {
+		document.getElementById("bootstrap-css")?.setAttribute("disabled", "");
+	});
+}

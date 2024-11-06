@@ -18,17 +18,34 @@
 -->
 
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import { RouterLink } from "vue-router";
+
+import { useBootstrap } from "@/composables/use-bootstap";
+
+useBootstrap();
 </script>
 
 <template>
-	<RouterView />
+	<div class="container">
+		<h1>Pick a side</h1>
+		<RouterLink to="/clock" class="btn btn-primary btn-lg"
+			>Giant clock</RouterLink
+		>
+		<div class="inline-divider">|</div>
+		<RouterLink to="/admin" class="btn btn-primary btn-lg"
+			>Admin</RouterLink
+		>
+	</div>
 </template>
 
-<style>
-#app {
-	height: 100%;
-	padding: 0;
-	margin: 0;
+<style lang="css" scoped>
+body {
+	font-family: "Orbitron", sans-serif;
+}
+
+.inline-divider {
+	display: inline-block;
+	width: 3em;
+	text-align: center;
 }
 </style>

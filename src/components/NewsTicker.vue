@@ -16,47 +16,66 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
-
 <script setup lang="ts">
-defineProps<{
-	msg: string;
-}>();
+const TICKER_TEXT = [
+	"one",
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+	"seven",
+	"eight",
+	"nine",
+	"ten",
+	"eleven",
+];
 </script>
 
 <template>
-	<div class="greetings">
-		<h1 class="green">{{ msg }}</h1>
-		<h3>
-			You’ve successfully created a project with
-			<a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a>
-			+
-			<a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a
-			>. What's next?
-		</h3>
-	</div>
+	<ol class="news-ticker">
+		<li class="item" v-for="(text, index) in TICKER_TEXT" :key="index">
+			{{ text }}
+		</li>
+	</ol>
 </template>
 
-<style scoped>
-h1 {
-	font-weight: 500;
-	font-size: 2.6rem;
-	position: relative;
-	top: -10px;
-}
+<style lang="scss">
+$height: 100px;
+$item-padding: 0.7em;
 
-h3 {
-	font-size: 1.2rem;
-}
+.news-ticker {
+	& {
+		background-color: black;
 
-.greetings h1,
-.greetings h3 {
-	text-align: center;
-}
+		position: absolute;
+		bottom: 0;
+		left: -300px;
+		right: 0;
+		height: $height;
 
-@media (min-width: 1024px) {
-	.greetings h1,
-	.greetings h3 {
-		text-align: left;
+		overflow: hidden;
+
+		display: flex;
+
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		font-family: "Roboto Mono", "STIX Two Math";
+		color: white;
+		font-size: 60px;
+		font-weight: 400;
+		line-height: $height;
+	}
+
+	> .item {
+		padding-left: $item-padding;
+	}
+
+	> .item:not(:last-child):after {
+		padding-left: $item-padding;
+		content: "⍭";
 	}
 }
 </style>

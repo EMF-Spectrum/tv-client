@@ -16,13 +16,42 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
-
 <script setup lang="ts">
-import TheWelcome from "../components/TheWelcome.vue";
+const turn = 0;
 </script>
 
 <template>
-	<main>
-		<TheWelcome />
-	</main>
+	<div class="turn-tracker">
+		<span class="label">Turn</span>
+		<span class="number">{{ turn }}</span>
+	</div>
 </template>
+
+<style lang="scss">
+.turn-tracker {
+	$size: 250px;
+
+	& {
+		text-align: center;
+		float: left;
+		width: $size;
+		height: $size;
+		border: 10px solid black;
+		margin: 25px;
+	}
+
+	> .label {
+		display: block;
+		font-size: 72px;
+		font-weight: 500;
+	}
+
+	> .number {
+		display: block;
+		position: relative;
+		top: -2rem;
+		font-size: 150px;
+		font-weight: 700;
+	}
+}
+</style>

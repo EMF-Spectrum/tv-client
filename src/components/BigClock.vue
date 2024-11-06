@@ -16,16 +16,26 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
-
 <template>
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width="20"
-		height="20"
-		fill="currentColor"
-	>
-		<path
-			d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.666.105 5.5 5.5 0 0 0-.114 7.665L10 18.78l8.39-8.4a5.5 5.5 0 0 0-.114-7.665 5.5 5.5 0 0 0-7.666-.105l-.61.61z"
-		/>
-	</svg>
+	<main class="big-clock">
+		<canvas id="clock-canvas"></canvas>
+	</main>
 </template>
+
+<style lang="scss">
+canvas {
+	background: white;
+}
+
+.big-clock {
+	& {
+		position: relative;
+	}
+
+	> canvas {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+}
+</style>
