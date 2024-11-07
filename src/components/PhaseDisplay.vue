@@ -17,15 +17,59 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { inject, ref, watchEffect } from "vue";
 
 import { HEARTBEAT_KEY } from "@/constants";
 
+const enum Doing {
+	IN,
+	OUT,
+	STATIC,
+}
+
+const DELETING_SPEED = 50;
+const TYPING_SPEED = 100;
+
 const heartbeat = inject(HEARTBEAT_KEY)!;
+const currentPhaseText = ref("");
+let targetPhaseText = "";
+let doing = Doing.STATIC;
 
-// TODO: Typing effect goes here
+let timerKey: number;
 
-const currentPhaseText = computed(() => heartbeat.phase);
+function timer() {
+	if (doing == Doing.IN) {
+		let ctext = currentPhaseText.value;
+		if (ctext == targetPhaseText) {
+			doing = Doing.STATIC;
+			window.clearInterval(timerKey);
+			return;
+		}
+		ctext = targetPhaseText.substring(0, ctext.length + 1);
+		currentPhaseText.value = ctext;
+	} else if (doing == Doing.OUT) {
+		let ctext = currentPhaseText.value;
+		if (ctext == "") {
+			doing = Doing.IN;
+			window.clearInterval(timerKey);
+			timerKey = window.setInterval(timer, TYPING_SPEED);
+			return;
+		}
+		ctext = ctext.substring(0, ctext.length - 1);
+		currentPhaseText.value = ctext;
+	} else {
+		window.clearInterval(timerKey);
+	}
+}
+
+watchEffect(() => {
+	if (heartbeat.phase != targetPhaseText) {
+		targetPhaseText = heartbeat.phase;
+		doing = Doing.OUT;
+		window.clearInterval(timerKey);
+		timerKey = window.setInterval(timer, DELETING_SPEED);
+	}
+});
 </script>
 
 <template>
