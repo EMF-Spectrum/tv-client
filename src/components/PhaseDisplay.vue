@@ -17,7 +17,15 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-const currentPhaseText = "TODO";
+import { computed, inject } from "vue";
+
+import { HEARTBEAT_KEY } from "@/constants";
+
+const heartbeat = inject(HEARTBEAT_KEY)!;
+
+// TODO: Typing effect goes here
+
+const currentPhaseText = computed(() => heartbeat.phase);
 </script>
 
 <template>

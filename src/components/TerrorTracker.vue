@@ -17,11 +17,17 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-const visible = true;
+import { inject } from "vue";
+
+import { HEARTBEAT_KEY } from "@/constants";
+
+const heartbeat = inject(HEARTBEAT_KEY)!;
+
+// TODO: Slidy scale goes here
 </script>
 
 <template>
-	<ol class="terror-tracker" :class="{ '-visible': visible }">
+	<ol class="terror-tracker" :class="{ '-visible': heartbeat.terror != 0 }">
 		<li class="tick" v-for="n in 250" :key="n" :id="`terror-tick-${n}`">
 			{{ n == 250 ? "PANIC" : n }}
 		</li>

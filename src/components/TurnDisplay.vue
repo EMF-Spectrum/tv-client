@@ -17,13 +17,17 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-const turn = 0;
+import { inject } from "vue";
+
+import { HEARTBEAT_KEY } from "@/constants";
+
+const heartbeat = inject(HEARTBEAT_KEY)!;
 </script>
 
 <template>
 	<div class="turn-tracker">
 		<span class="label">Turn</span>
-		<span class="number">{{ turn }}</span>
+		<span class="number">{{ heartbeat.turn }}</span>
 	</div>
 </template>
 

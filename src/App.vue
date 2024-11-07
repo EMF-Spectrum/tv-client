@@ -18,7 +18,34 @@
 -->
 
 <script setup lang="ts">
+import { provide, readonly, shallowReactive } from "vue";
 import { RouterView } from "vue-router";
+
+import { HEARTBEAT_KEY } from "@/constants";
+import type { HeartbeatEvent } from "@/types/data";
+import { Socket } from "@/utils/socket";
+
+let sockURL = new URL("/socket", window.location.href);
+sockURL.protocol = "ws";
+let sock = new Socket(sockURL.href);
+
+let lastHeartbeat = shallowReactive({
+	phase: "",
+	terror: 0,
+	timer: { state: "hidden" },
+	turn: 0,
+} as HeartbeatEvent);
+
+sock.on("heartbeat", (beat) => {
+	lastHeartbeat.phase = beat.phase;
+	lastHeartbeat.terror = beat.terror;
+	lastHeartbeat.timer = beat.timer;
+	lastHeartbeat.turn = beat.turn;
+});
+
+sock.connect();
+
+provide(HEARTBEAT_KEY, readonly(lastHeartbeat));
 </script>
 
 <template>
