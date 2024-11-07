@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import BigClock from "@/components/BigClock.vue";
-import NewsTicker from "@/components/NewsTicker.vue";
-import PhaseDisplay from "@/components/PhaseDisplay.vue";
-import TerrorTracker from "@/components/TerrorTracker.vue";
-import TurnDisplay from "@/components/TurnDisplay.vue";
-</script>
-
 <!--
  Copyright (C) 2024 EMF Spectrum Team
 
@@ -24,6 +16,14 @@ import TurnDisplay from "@/components/TurnDisplay.vue";
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
+<script setup lang="ts">
+import BigClock from "@/components/BigClock.vue";
+import NewsTicker from "@/components/NewsTicker.vue";
+import PhaseDisplay from "@/components/PhaseDisplay.vue";
+import TerrorTracker from "@/components/TerrorTracker.vue";
+import TurnDisplay from "@/components/TurnDisplay.vue";
+</script>
+
 <template>
 	<section class="main-page">
 		<header class="header clock-header">
