@@ -16,26 +16,24 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<script setup lang="ts">
-import AdminHUD from "@/components/AdminHUD.vue";
-import AdminTerror from "@/components/AdminTerror.vue";
-import AdminTicker from "@/components/AdminTicker.vue";
-import { useBootstrap } from "@/composables/use-bootstap";
-
-useBootstrap();
-</script>
-
 <template>
-	<div className="container">
-		<AdminHUD />
-		<AdminTerror />
-		<AdminTicker />
-		<h1>TODO</h1>
+	<div className="hud-ticker">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id
+		lacus purus. Nulla sollicitudin eu libero id tincidunt. Quisque at
+		imperdiet nisl. Maecenas dapibus sagittis tellus in vehicula. Nunc
+		vehicula magna at eros consequat, in dapibus sem lacinia. Aliquam ut
+		nibh turpis. Vivamus vitae dignissim enim, vulputate rutrum libero. Ut
+		eu quam nec mi porttitor venenatis vitae at augue. Sed vehicula in purus
+		vitae aliquam. Sed quis pretium nibh. Nulla facilisi.
 	</div>
 </template>
 
-<style lang="css">
-body {
-	font-family: "Orbitron", sans-serif;
+<style lang="scss">
+.hud-ticker {
+	font-family:
+		Roboto Mono,
+		"Courier New",
+		Courier,
+		monospace;
 }
 </style>
