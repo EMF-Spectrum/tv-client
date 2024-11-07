@@ -17,19 +17,53 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-import { inject } from "vue";
+import { computed, inject, ref } from "vue";
 
 import { HEARTBEAT_KEY } from "@/constants";
 
+const MAXIMUM_TERROR = 250;
+const TICK_WIDTH = 450;
+
 const heartbeat = inject(HEARTBEAT_KEY)!;
 
-// TODO: Slidy scale goes here
+const tickRefs = ref<HTMLLIElement[]>([]);
+
+// TODO: Transition
+const offset = computed(() => {
+	let terror = heartbeat.terror;
+	if (terror < 1) {
+		return 0;
+	}
+
+	// "It should be noted that the ref array does not guarantee the same order
+	// as the source array." 🙄
+	let tick = tickRefs.value.find(
+		(el) => el.dataset["tick"] == terror.toString(),
+	);
+
+	if (!tick) {
+		return 0;
+	}
+
+	return (window.innerWidth - TICK_WIDTH) / 2 - tick.offsetLeft;
+});
 </script>
 
 <template>
-	<ol class="terror-tracker" :class="{ '-visible': heartbeat.terror != 0 }">
-		<li class="tick" v-for="n in 250" :key="n" :id="`terror-tick-${n}`">
-			{{ n == 250 ? "PANIC" : n }}
+	<ol
+		class="terror-tracker"
+		:class="{ '-visible': heartbeat.terror != 0 }"
+		:style="{ left: offset + 'px' }"
+	>
+		<li
+			class="tick"
+			v-for="n in MAXIMUM_TERROR"
+			:key="n"
+			:data-tick="n"
+			:id="`terror-tick-${n}`"
+			ref="tickRefs"
+		>
+			{{ n == MAXIMUM_TERROR ? "PANIC" : n }}
 		</li>
 	</ol>
 	<div class="terror-fade"></div>
@@ -68,7 +102,7 @@ $colour-250: rgb(255, 0, 0);
 
 		opacity: 0;
 
-		transition: left 20s cubic-bezier(0.33, -0.15, 0.63, 1.35) 0s;
+		transition: left 2s cubic-bezier(0.33, -0.15, 0.63, 1.35) 0s;
 	}
 
 	&.-visible {
