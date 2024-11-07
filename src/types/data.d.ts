@@ -91,6 +91,9 @@ export interface SocketEvents {
 	heartbeat: HeartbeatEvent;
 	phaseChange: CurrentPhaseData;
 	turnChange: string;
+	phaseEdit: PhaseConfig;
+	turnEdit: TurnConfig;
+	turnOrderEdit: string[];
 	gameOver: void;
 	disconnected: void;
 	connected: void;
