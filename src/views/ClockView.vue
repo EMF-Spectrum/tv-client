@@ -17,15 +17,23 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
+import { inject } from "vue";
+
 import BigClock from "@/components/BigClock.vue";
 import NewsTicker from "@/components/NewsTicker.vue";
 import PhaseDisplay from "@/components/PhaseDisplay.vue";
 import TerrorTracker from "@/components/TerrorTracker.vue";
 import TurnDisplay from "@/components/TurnDisplay.vue";
+import { HEARTBEAT_KEY } from "@/constants";
+
+const heartbeat = inject(HEARTBEAT_KEY)!;
 </script>
 
 <template>
-	<section class="main-page">
+	<section
+		class="main-page"
+		:class="{ '-paused': heartbeat.timer.state == 'paused' }"
+	>
 		<header class="header clock-header">
 			<TurnDisplay class="turn" />
 			<PhaseDisplay class="phase" />
@@ -66,6 +74,36 @@ body {
 		grid-template-columns: 1fr;
 		height: 100%;
 		display: grid;
+	}
+
+	&::after {
+		content: "Game Paused";
+		text-align: center;
+		line-height: 100vh;
+		font-size: 200px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url("@/assets/frost-border.png");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-color: rgba(255, 255, 255, 0);
+		opacity: 0;
+		$transition-time: 0.5s;
+		transition:
+			opacity $transition-time linear,
+			background-color $transition-time linear,
+			transform $transition-time linear;
+		transform: scale(1.2);
+	}
+
+	&.-paused::after {
+		opacity: 1;
+		transform: scale(1);
+		background-color: rgba($color: lightblue, $alpha: 0.8);
 	}
 
 	> * {
