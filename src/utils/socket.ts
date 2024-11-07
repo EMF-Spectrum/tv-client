@@ -19,20 +19,8 @@
 
 import { autobind } from "core-decorators";
 import { EventEmitter } from "events";
-import type StrictEventEmitter from "strict-event-emitter-types";
 
-import type { CurrentPhaseData, HeartbeatEvent } from "@/types/data";
-
-export interface SocketEvents {
-	heartbeat: HeartbeatEvent;
-	phaseChange: CurrentPhaseData;
-	turnChange: string;
-	gameOver: void;
-	disconnected: void;
-	connected: void;
-}
-
-type MyEmitter = StrictEventEmitter<EventEmitter, SocketEvents>;
+import type { SpectrumGameEventEmitter } from "@/types/data";
 
 function asyncSleep(time: number): Promise<void> {
 	return new Promise((r) => window.setTimeout(r, time));
@@ -40,7 +28,9 @@ function asyncSleep(time: number): Promise<void> {
 
 const TIMEOUT = 100;
 
-export class Socket extends (EventEmitter as { new (): MyEmitter }) {
+export class Socket extends (EventEmitter as {
+	new (): SpectrumGameEventEmitter;
+}) {
 	private socket?: WebSocket;
 
 	constructor(private sockURL: string) {

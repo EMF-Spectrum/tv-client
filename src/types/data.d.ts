@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
+import type { EventEmitter } from "events";
+import type StrictEventEmitter from "strict-event-emitter-types";
 
 // Quickfix - this type used to exist and now apparently doesn't.
 export type DOMTimeStamp = number;
@@ -47,16 +49,6 @@ export interface HeartbeatEvent {
 	phase: string;
 	timer: TimerStatus;
 	terror: number;
-}
-
-/*
- * Phase Updates
- */
-
-export interface PhaseUpdateEvent {
-	turn: string;
-	phase: string;
-	label: string;
 }
 
 /*
@@ -94,3 +86,17 @@ export interface SavedGame {
 	terror: number;
 	over: boolean;
 }
+
+export interface SocketEvents {
+	heartbeat: HeartbeatEvent;
+	phaseChange: CurrentPhaseData;
+	turnChange: string;
+	gameOver: void;
+	disconnected: void;
+	connected: void;
+}
+
+export type SpectrumGameEventEmitter = StrictEventEmitter<
+	EventEmitter,
+	SocketEvents
+>;
