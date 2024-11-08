@@ -71,9 +71,3 @@ provide(API_KEY, callAPI);
 		<h1>TODO</h1>
 	</div>
 </template>
-
-<style lang="css">
-body {
-	font-family: "Orbitron", sans-serif;
-}
-</style>

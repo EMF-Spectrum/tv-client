@@ -16,36 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { createRouter, createWebHistory } from "vue-router";
+* {
+	box-sizing: border-box;
+}
 
-import AdminView from "@/views/AdminView.vue";
-import ClockView from "@/views/ClockView.vue";
-import InitialView from "@/views/InitialView.vue";
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	font-family: "Orbitron", sans-serif;
 
-const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
-	routes: [
-		{
-			path: "/",
-			name: "picker",
-			component: InitialView,
-		},
-		{
-			path: "/admin",
-			name: "admin",
-			component: AdminView,
-		},
-		{
-			path: "/clock",
-			name: "clock",
-			component: ClockView,
-		},
-	],
-});
-
-router.afterEach((to, from) => {
-	document.body.classList.remove(`route-${from.name?.toString()}`);
-	document.body.classList.add(`route-${to.name?.toString()}`);
-});
-
-export default router;
+	background: white;
+	color: black;
+}

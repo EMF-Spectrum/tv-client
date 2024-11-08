@@ -49,20 +49,8 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 <style lang="scss">
 @use "@/assets/sizes";
 
-* {
-	box-sizing: border-box;
-}
-
-html,
-body {
-	padding: 0;
-	margin: 0;
-	height: 100%;
+body.route-clock {
 	overflow: hidden;
-	font-family: "Orbitron", sans-serif;
-
-	background: white;
-	color: black;
 }
 
 .main-page {

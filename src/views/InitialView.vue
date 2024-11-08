@@ -39,10 +39,6 @@ useBootstrap();
 </template>
 
 <style lang="css" scoped>
-body {
-	font-family: "Orbitron", sans-serif;
-}
-
 .inline-divider {
 	display: inline-block;
 	width: 3em;
