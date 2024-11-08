@@ -22,6 +22,7 @@ import { computed, inject, onWatcherCleanup, ref, watchEffect } from "vue";
 import { Temporal } from "temporal-polyfill";
 
 import { HEARTBEAT_KEY } from "@/constants";
+import { API_KEY } from "@/constants";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
 
@@ -65,7 +66,64 @@ watchEffect(() => {
 	onWatcherCleanup(() => window.clearInterval(updateHandle));
 });
 
-const showNextTurn = computed(() => heartbeat.timer.state == "hidden");
+const enum ButtonState {
+	StartGame,
+	NextPhase,
+	Pause,
+	Resume,
+}
+
+const buttonState = computed(() => {
+	if (heartbeat.timer.state == "hidden") {
+		if (heartbeat.turn == 0) {
+			return ButtonState.StartGame;
+		}
+		return ButtonState.NextPhase;
+	}
+	if (heartbeat.timer.state == "paused") {
+		return ButtonState.Resume;
+	}
+	return ButtonState.Pause;
+});
+
+const buttonText = computed(() => {
+	switch (buttonState.value) {
+		case ButtonState.StartGame:
+			return "Start game";
+		case ButtonState.NextPhase:
+			return "Next";
+		case ButtonState.Pause:
+			return "Pause";
+		case ButtonState.Resume:
+			return "Resume";
+		// Typescript says this switch statement is exhaustive (correct) but
+		// eslint disagrees so we need to have this line to make it shut up
+		default:
+			throw new Error("This should never happen");
+	}
+});
+
+const callAPI = inject(API_KEY)!;
+
+function buttonClick() {
+	let apiName;
+	switch (buttonState.value) {
+		case ButtonState.StartGame:
+			apiName = "startGame";
+			break;
+		case ButtonState.NextPhase:
+			apiName = "advancePhase";
+			break;
+		case ButtonState.Pause:
+			apiName = "pause";
+			break;
+		case ButtonState.Resume:
+			apiName = "unpause";
+			break;
+	}
+
+	callAPI(apiName);
+}
 </script>
 
 <template>
@@ -74,7 +132,7 @@ const showNextTurn = computed(() => heartbeat.timer.state == "hidden");
 			<span class="text">Turn</span>
 			<span class="turn">{{ heartbeat.turn || "-" }}</span>
 		</div>
-		<div className="phase">
+		<div class="phase">
 			{{ heartbeat.phase || "Game Setup" }}
 		</div>
 		<div
@@ -86,13 +144,18 @@ const showNextTurn = computed(() => heartbeat.timer.state == "hidden");
 
 		<button
 			type="button"
-			className="btn btn-success btn-lg control"
-			v-if="showNextTurn"
+			class="btn btn-lg control"
+			:class="{
+				'btn-success':
+					buttonState == ButtonState.StartGame ||
+					buttonState == ButtonState.NextPhase,
+				'btn-warning':
+					buttonState == ButtonState.Pause ||
+					buttonState == ButtonState.Resume,
+			}"
+			@click="buttonClick"
 		>
-			{{ heartbeat.turn == 0 ? "Start Game" : "Next" }}
-		</button>
-		<button type="button" className="btn btn-warning btn-lg control" v-else>
-			{{ heartbeat.timer.state == "paused" ? "Resume" : "Pause" }}
+			{{ buttonText }}
 		</button>
 	</div>
 </template>
