@@ -25,3 +25,5 @@ export const API_KEY = Symbol() as InjectionKey<
 >;
 export const EVENT_KEY = Symbol() as InjectionKey<SpectrumGameEventEmitter>;
 export const HEARTBEAT_KEY = Symbol() as InjectionKey<Readonly<HeartbeatEvent>>;
+
+export const MAXIMUM_TERROR = 250;

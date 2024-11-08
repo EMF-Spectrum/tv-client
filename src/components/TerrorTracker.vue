@@ -19,9 +19,8 @@
 <script setup lang="ts">
 import { computed, inject, ref } from "vue";
 
-import { HEARTBEAT_KEY } from "@/constants";
+import { HEARTBEAT_KEY, MAXIMUM_TERROR } from "@/constants";
 
-const MAXIMUM_TERROR = 250;
 const TICK_WIDTH = 450;
 
 const heartbeat = inject(HEARTBEAT_KEY)!;

@@ -20,19 +20,42 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
 
-import { HEARTBEAT_KEY } from "@/constants";
+import { API_KEY, HEARTBEAT_KEY, MAXIMUM_TERROR } from "@/constants";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
+const callAPI = inject(API_KEY)!;
 
 const disabled = computed(() => heartbeat.turn == 0);
+
+function onAddTerror() {
+	let amount = parseInt(prompt("How much terror?") || "");
+	if (amount) {
+		callAPI("addTerror", { amount });
+	}
+}
+
+function onSetTerror() {
+	let amount = parseInt(prompt("How much terror?") || "");
+	if (amount) {
+		callAPI("setTerror", { amount });
+	}
+}
+
+function onRevealAliens() {
+	let amount = Math.floor((MAXIMUM_TERROR - heartbeat.terror) / 2);
+	if (amount > 0) {
+		callAPI("addTerror", { amount });
+	}
+}
 </script>
 
 <template>
 	<p class="terror-controller">
 		<button
 			type="button"
-			:disabled="disabled || heartbeat.terror < 1"
+			:disabled="disabled || heartbeat.terror <= 1"
 			class="btn btn-default btn-lg"
+			@click="callAPI('addTerror', { amount: -1 })"
 		>
 			-
 		</button>
@@ -45,6 +68,7 @@ const disabled = computed(() => heartbeat.turn == 0);
 			type="button"
 			class="btn btn-default btn-lg"
 			:disabled="disabled"
+			@click="callAPI('addTerror', { amount: 1 })"
 		>
 			+
 		</button>
@@ -53,6 +77,7 @@ const disabled = computed(() => heartbeat.turn == 0);
 			type="button"
 			class="btn btn-default btn-lg"
 			:disabled="disabled"
+			@click="onAddTerror"
 		>
 			Add Terror
 		</button>
@@ -61,6 +86,7 @@ const disabled = computed(() => heartbeat.turn == 0);
 			type="button"
 			class="btn btn-default btn-lg"
 			:disabled="disabled"
+			@click="onSetTerror"
 		>
 			Set Terror
 		</button>
@@ -69,6 +95,7 @@ const disabled = computed(() => heartbeat.turn == 0);
 			type="button"
 			class="btn btn-danger btn-lg"
 			:disabled="disabled"
+			@click="onRevealAliens"
 		>
 			Reveal Aliens
 		</button>
