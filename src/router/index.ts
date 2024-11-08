@@ -17,6 +17,8 @@
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { createRouter, createWebHistory } from "vue-router";
+import { nextTick } from "vue";
+import _ from "lodash";
 
 import AdminView from "@/views/AdminView.vue";
 import ClockView from "@/views/ClockView.vue";
@@ -29,23 +31,39 @@ const router = createRouter({
 			path: "/",
 			name: "picker",
 			component: InitialView,
+			meta: { title: "There can only be one" },
 		},
 		{
 			path: "/admin",
 			name: "admin",
 			component: AdminView,
+			meta: {
+				title: "Clarence Fortinbras' Stylish God-Panel for Event Control",
+			},
 		},
 		{
 			path: "/clock",
 			name: "clock",
 			component: ClockView,
+			meta: { title: "EMF Spectrum - So good they named it once" },
 		},
 	],
 });
 
+const ORIGINAL_TITLE = document.title;
+
 router.afterEach((to, from) => {
 	document.body.classList.remove(`route-${from.name?.toString()}`);
 	document.body.classList.add(`route-${to.name?.toString()}`);
+	// https://stackoverflow.com/a/51640162
+	nextTick(() => {
+		let title = to.meta.title;
+		if (_.isString(title)) {
+			document.title = title;
+		} else {
+			document.title = ORIGINAL_TITLE;
+		}
+	});
 });
 
 export default router;
