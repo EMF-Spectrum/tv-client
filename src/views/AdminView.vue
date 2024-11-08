@@ -18,13 +18,25 @@
 -->
 <script setup lang="ts">
 import _ from "lodash";
-import { provide } from "vue";
+import { Temporal } from "temporal-polyfill";
+import {
+	inject,
+	onMounted,
+	onUnmounted,
+	provide,
+	reactive,
+	readonly,
+} from "vue";
 
 import AdminHUD from "@/components/AdminHUD.vue";
 import AdminTerror from "@/components/AdminTerror.vue";
 import AdminTicker from "@/components/AdminTicker.vue";
 import { useBootstrap } from "@/composables/use-bootstap";
-import { API_KEY } from "@/constants";
+import { API_KEY, EVENT_KEY, GAME_KEY } from "@/constants";
+import type { SavedGame } from "@/types/data";
+import AdminTurnTable from "@/components/AdminTurnTable.vue";
+
+const REFRESH_GAME_EVERY = Temporal.Duration.from({ minutes: 1 });
 
 useBootstrap();
 
@@ -61,6 +73,78 @@ async function callAPI(func: string, data?: _.Dictionary<any>): Promise<any> {
 	return resData;
 }
 provide(API_KEY, callAPI);
+
+//
+// Master saved game
+//
+
+const savedGame: SavedGame = reactive({
+	currentPhase: null,
+	currentTurn: null,
+	over: false,
+	paused: false,
+	phases: {},
+	terror: 0,
+	turnOrder: [],
+	turns: {},
+});
+provide(GAME_KEY, readonly(savedGame));
+
+//
+// Socket events to keep game up to date
+//
+
+const socket = inject(EVENT_KEY)!;
+socket.on("gameOver", () => {
+	savedGame.over = true;
+});
+socket.on("phaseChange", (currentPhase) => {
+	savedGame.currentPhase = currentPhase;
+});
+socket.on("phaseEdit", (phase) => {
+	let id = phase.id;
+	if (!(id in savedGame.phases)) {
+		savedGame.phases[id] = phase;
+		return;
+	}
+	_.merge(savedGame.phases[id], phase);
+});
+socket.on("turnChange", (currentTurn) => {
+	savedGame.currentTurn = currentTurn;
+});
+socket.on("turnEdit", (turn) => {
+	let id = turn.id;
+	if (!(id in savedGame.turns)) {
+		savedGame.turns[id] = turn;
+		return;
+	}
+	_.merge(savedGame.turns[id], turn);
+});
+socket.on("turnOrderEdit", (turnOrder) => {
+	savedGame.turnOrder = turnOrder;
+});
+
+//
+// Regular full refreshes for saved game
+//
+
+async function fetchSavedGame() {
+	let newGame = await callAPI("getSaveGame");
+	_.merge(savedGame, newGame);
+}
+
+let fetchHandle: number;
+onMounted(() => {
+	fetchSavedGame();
+	fetchHandle = window.setInterval(
+		fetchSavedGame,
+		REFRESH_GAME_EVERY.total("milliseconds"),
+	);
+});
+
+onUnmounted(() => {
+	window.clearInterval(fetchHandle);
+});
 </script>
 
 <template>
@@ -68,6 +152,6 @@ provide(API_KEY, callAPI);
 		<AdminHUD />
 		<AdminTerror />
 		<AdminTicker />
-		<h1>TODO</h1>
+		<AdminTurnTable />
 	</div>
 </template>

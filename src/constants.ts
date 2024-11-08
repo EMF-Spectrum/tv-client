@@ -16,14 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
  */
-import type { InjectionKey } from "vue";
+import type { DeepReadonly, InjectionKey } from "vue";
 
-import type { HeartbeatEvent, SpectrumGameEventEmitter } from "@/types/data";
+import type {
+	HeartbeatEvent,
+	SavedGame,
+	SpectrumGameEventEmitter,
+} from "@/types/data";
 
 export const API_KEY = Symbol() as InjectionKey<
 	(name: string, data?: _.Dictionary<any>) => Promise<any>
 >;
 export const EVENT_KEY = Symbol() as InjectionKey<SpectrumGameEventEmitter>;
+export const GAME_KEY = Symbol() as InjectionKey<DeepReadonly<SavedGame>>;
 export const HEARTBEAT_KEY = Symbol() as InjectionKey<Readonly<HeartbeatEvent>>;
 
 export const MAXIMUM_TERROR = 250;
