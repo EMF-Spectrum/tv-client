@@ -18,6 +18,7 @@
  */
 import type { InjectionKey } from "vue";
 
-import type { HeartbeatEvent } from "@/types/data";
+import type { HeartbeatEvent, SpectrumGameEventEmitter } from "@/types/data";
 
+export const EVENT_KEY = Symbol() as InjectionKey<SpectrumGameEventEmitter>;
 export const HEARTBEAT_KEY = Symbol() as InjectionKey<Readonly<HeartbeatEvent>>;

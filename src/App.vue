@@ -21,7 +21,7 @@
 import { provide, readonly, shallowReactive } from "vue";
 import { RouterView } from "vue-router";
 
-import { HEARTBEAT_KEY } from "@/constants";
+import { EVENT_KEY, HEARTBEAT_KEY } from "@/constants";
 import type { HeartbeatEvent } from "@/types/data";
 import { Socket } from "@/utils/socket";
 
@@ -46,6 +46,7 @@ sock.on("heartbeat", (beat) => {
 sock.connect();
 
 provide(HEARTBEAT_KEY, readonly(lastHeartbeat));
+provide(EVENT_KEY, sock);
 </script>
 
 <template>
