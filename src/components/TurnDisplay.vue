@@ -25,23 +25,60 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 </script>
 
 <template>
-	<div class="turn-tracker" v-if="heartbeat.turn != 0">
-		<span class="label">Turn</span>
-		<span class="number">{{ heartbeat.turn }}</span>
+	<div class="turn-holder" v-if="heartbeat.turn != 0">
+		<Transition>
+			<div class="turn-tracker" :key="heartbeat.turn">
+				<span class="label">Turn</span>
+				<span class="number">{{ heartbeat.turn }}</span>
+			</div>
+		</Transition>
 	</div>
 </template>
 
 <style lang="scss">
-.turn-tracker {
-	$size: 250px;
+@use "@/assets/sizes";
+.turn-holder {
+	margin: sizes.$turn-padding;
 
+	transform-style: preserve-3d;
+	position: absolute;
+	transform: translateZ(-(sizes.$turn-size / 2));
+	// perspective: 600px;
+	// perspective-origin: center;
+	width: sizes.$turn-size;
+	height: sizes.$turn-size;
+}
+
+.turn-tracker {
 	& {
 		text-align: center;
-		float: left;
-		width: $size;
-		height: $size;
+		width: sizes.$turn-size;
+		height: sizes.$turn-size;
+		// width: 100%;
+		// height: 100%;
 		border: 10px solid black;
-		margin: 25px;
+		position: absolute;
+		transform: rotateY(0deg) translateZ((sizes.$turn-size / 2));
+		transform-style: preserve-3d;
+	}
+
+	&.v-enter-active,
+	&.v-leave-active {
+		transition: transform 0.5s linear;
+		// transition: transform 10s linear;
+	}
+
+	&.v-enter-from {
+		transform: rotateY(90deg) translateZ((sizes.$turn-size / 2));
+	}
+
+	&.v-enter-to,
+	&.v-leave-from {
+		transform: rotateY(0deg) translateZ((sizes.$turn-size / 2));
+	}
+
+	&.v-leave-to {
+		transform: rotateY(-90deg) translateZ((sizes.$turn-size / 2));
 	}
 
 	> .label {

@@ -85,6 +85,7 @@ watchEffect(() => {
 		font-size: 160px;
 		font-weight: 500;
 		margin: 0;
+		margin-left: sizes.$turn-size + (sizes.$turn-padding * 2);
 
 		line-height: sizes.$header-height;
 		height: sizes.$header-height;
