@@ -25,7 +25,7 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 </script>
 
 <template>
-	<div class="turn-tracker">
+	<div class="turn-tracker" v-if="heartbeat.turn != 0">
 		<span class="label">Turn</span>
 		<span class="number">{{ heartbeat.turn }}</span>
 	</div>

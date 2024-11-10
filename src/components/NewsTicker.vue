@@ -17,6 +17,12 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
+import { inject } from "vue";
+
+import { HEARTBEAT_KEY } from "@/constants";
+
+const heartbeat = inject(HEARTBEAT_KEY)!;
+
 const TICKER_TEXT = [
 	"one",
 	"two",
@@ -33,7 +39,7 @@ const TICKER_TEXT = [
 </script>
 
 <template>
-	<ol class="news-ticker">
+	<ol class="news-ticker" v-if="heartbeat.turn != 0">
 		<li class="item" v-for="(text, index) in TICKER_TEXT" :key="index">
 			{{ text }}
 		</li>
