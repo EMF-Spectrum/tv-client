@@ -132,6 +132,7 @@ async function fetchSavedGame() {
 	let newGame = await callAPI("getSaveGame");
 	_.merge(savedGame, newGame);
 }
+socket.on("connected", fetchSavedGame);
 
 let fetchHandle: number;
 onMounted(() => {
