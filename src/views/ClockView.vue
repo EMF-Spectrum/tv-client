@@ -61,6 +61,8 @@ const pageClass = computed(() => {
 
 body.route-clock {
 	overflow: hidden;
+	background: white;
+	color: black;
 }
 
 .main-page {
