@@ -50,47 +50,57 @@ function onRevealAliens() {
 </script>
 
 <template>
-	<p class="terror-controller">
+	<div
+		:class="[
+			'terror-controller',
+			'd-flex',
+			'align-items-center',
+			'justify-content-between',
+			'my-3',
+		]"
+	>
+		<div class="btn-group">
+			<button
+				type="button"
+				:disabled="disabled || heartbeat.terror <= 1"
+				class="btn btn-outline-secondary btn-lg"
+				@click="callAPI('addTerror', { amount: -1 })"
+			>
+				-
+			</button>
+			<button
+				type="button"
+				disabled
+				class="btn btn-outline-secondary btn-lg"
+			>
+				Terror Tracker: {{ heartbeat.terror }}
+			</button>
+			<button
+				type="button"
+				class="btn btn-outline-secondary btn-lg"
+				:disabled="disabled"
+				@click="callAPI('addTerror', { amount: 1 })"
+			>
+				+
+			</button>
+		</div>
+		<span class="divider flex-grow-1 text-center">|</span>
 		<button
 			type="button"
-			:disabled="disabled || heartbeat.terror <= 1"
-			class="btn btn-outline-secondary btn-lg"
-			@click="callAPI('addTerror', { amount: -1 })"
-		>
-			-
-		</button>
-		{{ " " }}
-		<button type="button" disabled class="btn btn-outline-secondary btn-lg">
-			Terror Tracker: {{ heartbeat.terror }}
-		</button>
-		{{ " " }}
-		<button
-			type="button"
-			class="btn btn-outline-secondary btn-lg"
-			:disabled="disabled"
-			@click="callAPI('addTerror', { amount: 1 })"
-		>
-			+
-		</button>
-		<span class="divider">|</span>
-		<button
-			type="button"
-			class="btn btn-outline-secondary btn-lg"
+			class="btn btn-outline-secondary btn-lg me-2"
 			:disabled="disabled"
 			@click="onAddTerror"
 		>
 			Add Terror
 		</button>
-		{{ " " }}
 		<button
 			type="button"
-			class="btn btn-outline-secondary btn-lg"
+			class="btn btn-outline-secondary btn-lg me-2"
 			:disabled="disabled"
 			@click="onSetTerror"
 		>
 			Set Terror
 		</button>
-		{{ " " }}
 		<button
 			type="button"
 			class="btn btn-danger btn-lg"
@@ -99,18 +109,5 @@ function onRevealAliens() {
 		>
 			Reveal Aliens
 		</button>
-	</p>
+	</div>
 </template>
-
-<style lang="scss">
-.terror-controller {
-	& {
-		margin-top: 1em;
-	}
-
-	> .divider {
-		display: inline-block;
-		margin: 0 2em;
-	}
-}
-</style>

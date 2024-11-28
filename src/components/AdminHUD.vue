@@ -143,7 +143,7 @@ function buttonClick() {
 
 		<button
 			type="button"
-			class="btn btn-lg control my-2 ml-3"
+			class="btn btn-lg control my-2 ms-3"
 			:class="{
 				'btn-success':
 					buttonState == ButtonState.StartGame ||

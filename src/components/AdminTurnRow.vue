@@ -50,17 +50,19 @@ function onAddPhase() {
 <template>
 	<tbody class="game-turn">
 		<tr class="table-secondary heading">
-			<th scope="rowgroup" colSpan="2" class="name">
+			<th scope="rowgroup" colSpan="2" class="name fs-5 ps-3">
 				Turn {{ turn?.label ?? "⚠️" }}
 			</th>
 			<td class="control">
-				<button
-					class="btn btn-outline-secondary btn-block btn-sm"
-					type="button"
-					@click="onAddPhase"
-				>
-					Add Phase
-				</button>
+				<div class="d-flex">
+					<button
+						class="btn btn-outline-secondary btn-sm w-100"
+						type="button"
+						@click="onAddPhase"
+					>
+						Add Phase
+					</button>
+				</div>
 			</td>
 		</tr>
 

@@ -27,7 +27,7 @@ const callAPI = inject(API_KEY)!;
 </script>
 
 <template>
-	<table class="table table-striped">
+	<table class="table table-striped mt-3">
 		<colgroup>
 			<col width="40%" />
 			<col width="40%" />
@@ -39,19 +39,13 @@ const callAPI = inject(API_KEY)!;
 			:turn-id="turnID"
 		/>
 	</table>
-	<div class="add-turn-button">
+	<div class="mb-5 d-flex">
 		<button
 			type="button"
-			className="btn btn-outline-secondary btn-lg btn-block"
+			className="btn btn-outline-secondary btn-lg w-100"
 			@click="callAPI('newTurn')"
 		>
 			Add Turn
 		</button>
 	</div>
 </template>
-
-<style lang="scss">
-.add-turn-button {
-	margin-bottom: 2em;
-}
-</style>
