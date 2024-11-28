@@ -49,14 +49,14 @@ function onAddPhase() {
 
 <template>
 	<tbody class="game-turn">
-		<tr class="table-secondary heading">
+		<tr class="heading">
 			<th scope="rowgroup" colSpan="2" class="name fs-5 ps-3">
 				Turn {{ turn?.label ?? "⚠️" }}
 			</th>
 			<td class="control">
 				<div class="d-flex">
 					<button
-						class="btn btn-outline-secondary btn-sm w-100"
+						class="btn btn-outline-light btn-sm w-100"
 						type="button"
 						@click="onAddPhase"
 					>
@@ -80,6 +80,16 @@ function onAddPhase() {
 	// Remove the double border for repeated tbodys
 	.table tbody + & {
 		border-top: 0;
+	}
+
+	$old-bs-info-colour: #d9edf7;
+
+	> .heading > * {
+		background-color: darken($old-bs-info-colour, 15%);
+
+		[data-bs-theme="dark"] & {
+			background-color: darken($old-bs-info-colour, 40%);
+		}
 	}
 
 	// Chrome does not support position:sticky on trs

@@ -7,12 +7,11 @@
 		<title>EMF Spectrum Infotainment</title>
 		<meta name="color-scheme" content="light dark" />
 		<script>
-			document.documentElement.setAttribute(
-				"data-bs-theme",
-				window.matchMedia("(prefers-color-scheme: dark)").matches
-					? "dark"
-					: "light",
-			);
+			// Bootstrap doesn't natively support `prefers-color-scheme` which
+			// is annoying but at least we have this silly workaround
+			if (matchMedia("(prefers-color-scheme: dark)").matches) {
+				document.documentElement.dataset.bsTheme = "dark";
+			}
 		</script>
 
 		<link

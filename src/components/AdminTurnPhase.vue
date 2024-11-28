@@ -24,11 +24,17 @@ import { computed, inject, ref, watchEffect } from "vue";
 import FontAwesomeIcon from "@/components/FontAwesomeIcon.vue";
 import { API_KEY, GAME_KEY } from "@/constants";
 import type { PhaseConfig } from "@/types/data";
+import { ColorScheme, useDarkMode } from "@/composables/use-dark";
 
 const props = defineProps({
 	phaseId: { type: String, required: true },
 	isCurrent: { type: Boolean },
 });
+
+const colourScheme = useDarkMode();
+const buttonClass = computed(() =>
+	colourScheme.value == ColorScheme.Light ? "btn-light" : "btn-outline-light",
+);
 
 const enum DisplayState {
 	Display,
@@ -169,7 +175,8 @@ async function onSubmit(event: Event) {
 				</button>
 				<button
 					type="button"
-					class="btn btn-light"
+					class="btn"
+					:class="buttonClass"
 					title="Move up"
 					@click="
 						callAPI('bumpPhase', {
@@ -182,7 +189,8 @@ async function onSubmit(event: Event) {
 				</button>
 				<button
 					type="button"
-					class="btn btn-light"
+					class="btn"
+					:class="buttonClass"
 					title="Move down"
 					@click="
 						callAPI('bumpPhase', {
@@ -230,6 +238,28 @@ async function onSubmit(event: Event) {
 	> .controls > form {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	[data-bs-theme="dark"] &.table-success > * {
+		$colour: #0f5132;
+		--bs-table-bg: #{$colour};
+		--bs-table-striped-bg: #{$colour};
+		color: white;
+	}
+
+	[data-bs-theme="dark"] &.table-warning > * {
+		$colour: #332701;
+		--bs-table-bg: #{$colour};
+		--bs-table-striped-bg: #{$colour};
+		color: white;
+	}
+
+	[data-bs-theme="dark"] &.table-danger > * {
+		// $colour: #2c0b0e;
+		$colour: #842029;
+		--bs-table-bg: #{$colour};
+		--bs-table-striped-bg: #{$colour};
+		color: white;
 	}
 }
 </style>

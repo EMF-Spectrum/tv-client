@@ -20,12 +20,20 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
 
+import { ColorScheme, useDarkMode } from "@/composables/use-dark";
 import { API_KEY, HEARTBEAT_KEY, MAXIMUM_TERROR } from "@/constants";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
 const callAPI = inject(API_KEY)!;
 
 const disabled = computed(() => heartbeat.turn == 0);
+
+const colourScheme = useDarkMode();
+const buttonClass = computed(() =>
+	colourScheme.value == ColorScheme.Light
+		? "btn-outline-secondary"
+		: "btn-outline-light",
+);
 
 function onAddTerror() {
 	let amount = parseInt(prompt("How much terror?") || "");
@@ -63,7 +71,8 @@ function onRevealAliens() {
 			<button
 				type="button"
 				:disabled="disabled || heartbeat.terror <= 1"
-				class="btn btn-outline-secondary btn-lg"
+				class="btn btn-lg"
+				:class="buttonClass"
 				@click="callAPI('addTerror', { amount: -1 })"
 			>
 				-
@@ -71,23 +80,26 @@ function onRevealAliens() {
 			<button
 				type="button"
 				disabled
-				class="btn btn-outline-secondary btn-lg"
+				class="btn btn-lg"
+				:class="buttonClass"
 			>
 				Terror Tracker: {{ heartbeat.terror }}
 			</button>
 			<button
 				type="button"
-				class="btn btn-outline-secondary btn-lg"
+				class="btn btn-lg"
 				:disabled="disabled"
 				@click="callAPI('addTerror', { amount: 1 })"
+				:class="buttonClass"
 			>
 				+
 			</button>
 		</div>
-		<span class="divider flex-grow-1 text-center">|</span>
+		<span class="divider flex-grow-1 text-center"></span>
 		<button
 			type="button"
-			class="btn btn-outline-secondary btn-lg me-2"
+			class="btn btn-lg me-2"
+			:class="buttonClass"
 			:disabled="disabled"
 			@click="onAddTerror"
 		>
@@ -95,7 +107,8 @@ function onRevealAliens() {
 		</button>
 		<button
 			type="button"
-			class="btn btn-outline-secondary btn-lg me-2"
+			class="btn btn-lg me-2"
+			:class="buttonClass"
 			:disabled="disabled"
 			@click="onSetTerror"
 		>

@@ -134,11 +134,10 @@ function buttonClick() {
 		<div class="phase">
 			{{ heartbeat.phase || "Game Setup" }}
 		</div>
-		<div
-			class="timer"
-			:class="{ '-paused': heartbeat.timer.state == 'paused' }"
-		>
-			{{ timerDisplay }}
+		<div class="timer">
+			<span :class="{ 'text-danger': heartbeat.timer.state == 'paused' }">
+				{{ timerDisplay }}
+			</span>
 		</div>
 
 		<button
@@ -167,7 +166,7 @@ function buttonClick() {
 	> .turn,
 	> .phase,
 	> .timer {
-		border-right: 2px solid black;
+		border-right: 2px solid currentColor;
 		padding: 0.1em 30px;
 	}
 
@@ -186,10 +185,6 @@ function buttonClick() {
 			Courier,
 			monospace;
 		flex-basis: 4.3em;
-	}
-
-	> .timer.-paused {
-		color: red;
 	}
 
 	> .control {
