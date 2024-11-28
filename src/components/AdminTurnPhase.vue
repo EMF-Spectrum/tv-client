@@ -21,7 +21,7 @@ import _ from "lodash";
 import { Temporal } from "temporal-polyfill";
 import { computed, inject, ref, watchEffect } from "vue";
 
-import GlyphIcon from "@/components/GlyphIcon.vue";
+import FontAwesomeIcon from "@/components/FontAwesomeIcon.vue";
 import { API_KEY, GAME_KEY } from "@/constants";
 import type { PhaseConfig } from "@/types/data";
 
@@ -156,7 +156,7 @@ async function onSubmit(event: Event) {
 						title="Edit"
 						@click="displayState = DisplayState.Edit"
 					>
-						<GlyphIcon name="edit" />
+						<FontAwesomeIcon name="pen-to-square" />
 					</button>
 				</div>
 				<div class="btn-group">
@@ -166,8 +166,14 @@ async function onSubmit(event: Event) {
 						@click="callAPI('setPhase', { phaseID: props.phaseId })"
 						:title="isCurrent ? 'Restart' : 'Jump here'"
 					>
-						<GlyphIcon
-							:name="isCurrent ? 'refresh' : 'play-circle'"
+						<FontAwesomeIcon
+							v-if="isCurrent"
+							name="arrows-rotate"
+						/>
+						<FontAwesomeIcon
+							v-else
+							name="play-circle"
+							type="regular"
 						/>
 					</button>
 				</div>
@@ -183,7 +189,7 @@ async function onSubmit(event: Event) {
 							})
 						"
 					>
-						<GlyphIcon name="chevron-up" />
+						<FontAwesomeIcon name="chevron-up" />
 					</button>
 				</div>
 				<div class="btn-group">
@@ -198,7 +204,7 @@ async function onSubmit(event: Event) {
 							})
 						"
 					>
-						<GlyphIcon name="chevron-down" />
+						<FontAwesomeIcon name="chevron-down" />
 					</button>
 				</div>
 			</div>

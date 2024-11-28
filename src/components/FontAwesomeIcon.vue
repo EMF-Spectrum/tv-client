@@ -16,12 +16,26 @@
  You should have received a copy of the GNU General Public License
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
+
 <script setup lang="ts">
-const props = defineProps({
-	name: { type: String, required: true },
+import "@fortawesome/fontawesome-free/css/all.css";
+import { computed } from "vue";
+
+const props = defineProps<{
+	name: string;
+	type?: "solid" | "regular" | "brand";
+}>();
+
+const type = computed(() => {
+	if (props.type == null) {
+		return "solid";
+	} else if (props.type == "brand") {
+		return "brands";
+	}
+	return props.type;
 });
 </script>
 
 <template>
-	<span :class="`glyphicon glyphicon-${props.name}`" />
+	<i :class="`fa fa-${type} fa-${props.name}`" />
 </template>
