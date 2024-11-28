@@ -54,19 +54,19 @@ function onRevealAliens() {
 		<button
 			type="button"
 			:disabled="disabled || heartbeat.terror <= 1"
-			class="btn btn-default btn-lg"
+			class="btn btn-outline-secondary btn-lg"
 			@click="callAPI('addTerror', { amount: -1 })"
 		>
 			-
 		</button>
 		{{ " " }}
-		<button type="button" disabled class="btn btn-default btn-lg">
+		<button type="button" disabled class="btn btn-outline-secondary btn-lg">
 			Terror Tracker: {{ heartbeat.terror }}
 		</button>
 		{{ " " }}
 		<button
 			type="button"
-			class="btn btn-default btn-lg"
+			class="btn btn-outline-secondary btn-lg"
 			:disabled="disabled"
 			@click="callAPI('addTerror', { amount: 1 })"
 		>
@@ -75,7 +75,7 @@ function onRevealAliens() {
 		<span class="divider">|</span>
 		<button
 			type="button"
-			class="btn btn-default btn-lg"
+			class="btn btn-outline-secondary btn-lg"
 			:disabled="disabled"
 			@click="onAddTerror"
 		>
@@ -84,7 +84,7 @@ function onRevealAliens() {
 		{{ " " }}
 		<button
 			type="button"
-			class="btn btn-default btn-lg"
+			class="btn btn-outline-secondary btn-lg"
 			:disabled="disabled"
 			@click="onSetTerror"
 		>

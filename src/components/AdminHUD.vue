@@ -143,14 +143,13 @@ function buttonClick() {
 
 		<button
 			type="button"
-			class="btn btn-lg control"
+			class="btn btn-lg control my-2 ml-3"
 			:class="{
 				'btn-success':
 					buttonState == ButtonState.StartGame ||
 					buttonState == ButtonState.NextPhase,
-				'btn-warning':
-					buttonState == ButtonState.Pause ||
-					buttonState == ButtonState.Resume,
+				'btn-warning': buttonState == ButtonState.Resume,
+				'btn-outline-warning': buttonState == ButtonState.Pause,
 			}"
 			@click="buttonClick"
 		>
@@ -169,7 +168,7 @@ function buttonClick() {
 	> .phase,
 	> .timer {
 		border-right: 2px solid black;
-		padding: 0 30px;
+		padding: 0.1em 30px;
 	}
 
 	> .phase {
@@ -179,7 +178,6 @@ function buttonClick() {
 
 	> .timer {
 		font-size: 48px;
-		padding: 0 30px;
 		// Fixed width for the numbers
 		text-align: center;
 		font-family:
@@ -195,7 +193,7 @@ function buttonClick() {
 	}
 
 	> .control {
-		margin-left: 30px;
+		// margin-left: 30px;
 		width: 10em;
 	}
 }

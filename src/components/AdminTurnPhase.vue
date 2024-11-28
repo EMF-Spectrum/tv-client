@@ -59,11 +59,11 @@ const displayState = ref(DisplayState.Display);
 const rowClass = computed(() => {
 	if (displayState.value != DisplayState.Display) {
 		if (props.isCurrent) {
-			return "danger";
+			return "table-danger";
 		}
-		return "warning";
+		return "table-warning";
 	} else if (props.isCurrent) {
-		return "success";
+		return "table-success";
 	}
 	return undefined;
 });
@@ -146,67 +146,53 @@ async function onSubmit(event: Event) {
 		</td>
 		<td class="controls">
 			<div
-				class="btn-group btn-group-justified"
+				class="btn-group"
+				role="group"
 				v-if="displayState == DisplayState.Display"
 			>
-				<div class="btn-group">
-					<button
-						type="button"
-						class="btn btn-primary"
-						title="Edit"
-						@click="displayState = DisplayState.Edit"
-					>
-						<FontAwesomeIcon name="pen-to-square" />
-					</button>
-				</div>
-				<div class="btn-group">
-					<button
-						type="button"
-						class="btn btn-danger"
-						@click="callAPI('setPhase', { phaseID: props.phaseId })"
-						:title="isCurrent ? 'Restart' : 'Jump here'"
-					>
-						<FontAwesomeIcon
-							v-if="isCurrent"
-							name="arrows-rotate"
-						/>
-						<FontAwesomeIcon
-							v-else
-							name="play-circle"
-							type="regular"
-						/>
-					</button>
-				</div>
-				<div class="btn-group">
-					<button
-						type="button"
-						class="btn btn-default"
-						title="Move up"
-						@click="
-							callAPI('bumpPhase', {
-								phaseID: props.phaseId,
-								direction: 'up',
-							})
-						"
-					>
-						<FontAwesomeIcon name="chevron-up" />
-					</button>
-				</div>
-				<div class="btn-group">
-					<button
-						type="button"
-						class="btn btn-default"
-						title="Move down"
-						@click="
-							callAPI('bumpPhase', {
-								phaseID: props.phaseId,
-								direction: 'down',
-							})
-						"
-					>
-						<FontAwesomeIcon name="chevron-down" />
-					</button>
-				</div>
+				<button
+					type="button"
+					class="btn btn-primary"
+					title="Edit"
+					@click="displayState = DisplayState.Edit"
+				>
+					<FontAwesomeIcon name="pen-to-square" />
+				</button>
+				<button
+					type="button"
+					class="btn btn-danger"
+					@click="callAPI('setPhase', { phaseID: props.phaseId })"
+					:title="isCurrent ? 'Restart' : 'Jump here'"
+				>
+					<FontAwesomeIcon v-if="isCurrent" name="arrows-rotate" />
+					<FontAwesomeIcon v-else name="play-circle" type="regular" />
+				</button>
+				<button
+					type="button"
+					class="btn btn-light"
+					title="Move up"
+					@click="
+						callAPI('bumpPhase', {
+							phaseID: props.phaseId,
+							direction: 'up',
+						})
+					"
+				>
+					<FontAwesomeIcon name="chevron-up" />
+				</button>
+				<button
+					type="button"
+					class="btn btn-light"
+					title="Move down"
+					@click="
+						callAPI('bumpPhase', {
+							phaseID: props.phaseId,
+							direction: 'down',
+						})
+					"
+				>
+					<FontAwesomeIcon name="chevron-down" />
+				</button>
 			</div>
 			<form :id="formID" @submit="onSubmit" v-else>
 				<button

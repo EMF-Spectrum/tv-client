@@ -42,7 +42,7 @@ const callAPI = inject(API_KEY)!;
 	<div class="add-turn-button">
 		<button
 			type="button"
-			className="btn btn-default btn-lg btn-block"
+			className="btn btn-outline-secondary btn-lg btn-block"
 			@click="callAPI('newTurn')"
 		>
 			Add Turn
