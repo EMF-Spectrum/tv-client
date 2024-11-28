@@ -20,9 +20,9 @@
 <script setup lang="ts">
 import { computed, inject, type DeepReadonly } from "vue";
 
+import AdminTurnPhase from "@/components/AdminTurnPhase.vue";
 import { API_KEY, GAME_KEY } from "@/constants";
 import type { TurnConfig } from "@/types/data";
-import AdminTurnPhase from "@/components/AdminTurnPhase.vue";
 
 const props = defineProps({
 	turnId: { type: String, required: true },

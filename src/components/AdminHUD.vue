@@ -18,11 +18,10 @@
 -->
 
 <script setup lang="ts">
-import { computed, inject, onWatcherCleanup, ref, watchEffect } from "vue";
 import { Temporal } from "temporal-polyfill";
+import { computed, inject, onWatcherCleanup, ref, watchEffect } from "vue";
 
-import { HEARTBEAT_KEY } from "@/constants";
-import { API_KEY } from "@/constants";
+import { API_KEY, HEARTBEAT_KEY } from "@/constants";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
 

@@ -17,13 +17,13 @@
  along with The EMF Spectrum TV System.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <script setup lang="ts">
-import { computed, inject, ref, watchEffect } from "vue";
 import _ from "lodash";
+import { Temporal } from "temporal-polyfill";
+import { computed, inject, ref, watchEffect } from "vue";
 
+import GlyphIcon from "@/components/GlyphIcon.vue";
 import { API_KEY, GAME_KEY } from "@/constants";
 import type { PhaseConfig } from "@/types/data";
-import GlyphIcon from "@/components/GlyphIcon.vue";
-import { Temporal } from "temporal-polyfill";
 
 const props = defineProps({
 	phaseId: { type: String, required: true },
