@@ -50,9 +50,23 @@ const pageClass = computed(() => {
 			<TerrorTracker class="terror" />
 			<NewsTicker class="ticker" />
 		</footer>
-		<div class="overlay -paused">Game Paused</div>
-		<div class="overlay -game-over">Thank you for playing!</div>
-		<div class="overlay -not-started">Please Wait</div>
+		<Transition>
+			<div
+				v-if="heartbeat.turn == 0 && !gameOver"
+				class="overlay -not-started"
+			>
+				Please Wait
+			</div>
+			<div v-else-if="gameOver" class="overlay -game-over">
+				Thank you for playing!
+			</div>
+			<div
+				v-else-if="heartbeat.timer.state == 'paused'"
+				class="overlay -paused"
+			>
+				Game Paused
+			</div>
+		</Transition>
 	</section>
 </template>
 
@@ -85,14 +99,29 @@ body.route-clock {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		opacity: 0;
-		$transition-time: 0.5s;
-		transition:
-			opacity $transition-time linear,
-			background-color $transition-time linear,
-			transform $transition-time linear;
-		background-color: rgba(255, 255, 255, 0);
-		transform: scale(1.2);
+		background-color: black;
+
+		&.v-enter-active,
+		&.v-leave-active {
+			$transition-time: 0.5s;
+			transition:
+				opacity $transition-time linear,
+				background-color $transition-time linear,
+				transform $transition-time linear;
+		}
+
+		&.v-enter-from,
+		&.v-leave-to {
+			opacity: 0;
+			background-color: rgba(255, 255, 255, 0);
+			transform: scale(1.2);
+		}
+
+		&.v-enter-to,
+		&.v-leave-from {
+			opacity: 1;
+			transform: scale(1);
+		}
 	}
 
 	> .overlay.-paused {
@@ -101,11 +130,6 @@ body.route-clock {
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
-	}
-
-	&.-timer-paused > .overlay.-paused {
-		opacity: 1;
-		transform: scale(1);
 		background-color: rgba($color: lightblue, $alpha: 0.8);
 	}
 
@@ -113,18 +137,6 @@ body.route-clock {
 	.overlay.-not-started {
 		font-size: 100px;
 		color: white;
-	}
-
-	&.-game-over > .overlay.-game-over {
-		opacity: 1;
-		transform: scale(1);
-		background-color: black;
-	}
-
-	&.-not-started > .overlay.-not-started {
-		opacity: 1;
-		transform: scale(1);
-		background-color: black;
 	}
 
 	> * {
