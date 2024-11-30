@@ -21,4 +21,11 @@ export default defineConfig({
 			"/api": "http://localhost:8081",
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: "modern-compiler", // or 'modern'
+			},
+		},
+	},
 });
