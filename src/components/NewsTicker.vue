@@ -20,6 +20,7 @@
 import { inject } from "vue";
 
 import { HEARTBEAT_KEY } from "@/constants";
+import { Vue3Marquee } from "vue3-marquee";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
 
@@ -39,11 +40,22 @@ const TICKER_TEXT = [
 </script>
 
 <template>
-	<ol class="news-ticker" v-if="heartbeat.turn != 0">
-		<li class="item" v-for="(text, index) in TICKER_TEXT" :key="index">
-			{{ text }}
-		</li>
-	</ol>
+	<div class="news-ticker" v-if="heartbeat.turn != 0">
+		<Vue3Marquee
+			:pause="heartbeat.timer.state == 'paused'"
+			:duration="60"
+			:clone="true"
+		>
+			<span
+				class="item"
+				v-for="(text, index) in TICKER_TEXT"
+				:key="`${heartbeat.phase}-${index}`"
+			>
+				{{ heartbeat.phase }} {{ index }}
+			</span>
+			<!-- <span class="item">{{ heartbeat.phase }}</span> -->
+		</Vue3Marquee>
+	</div>
 </template>
 
 <style lang="scss">
@@ -60,14 +72,6 @@ $item-padding: 0.7em;
 		right: 0;
 		height: $height;
 
-		overflow: hidden;
-
-		display: flex;
-
-		list-style: none;
-		margin: 0;
-		padding: 0;
-
 		font-family: "Roboto Mono", "STIX Two Math";
 		color: white;
 		font-size: 60px;
@@ -75,11 +79,8 @@ $item-padding: 0.7em;
 		line-height: $height;
 	}
 
-	> .item {
-		padding-left: $item-padding;
-	}
-
-	> .item:not(:last-child):after {
+	.item::after {
+		padding-right: $item-padding;
 		padding-left: $item-padding;
 		content: "⍭";
 	}
