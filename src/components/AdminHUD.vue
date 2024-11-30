@@ -22,6 +22,7 @@ import { Temporal } from "temporal-polyfill";
 import { computed, inject, onWatcherCleanup, ref, watchEffect } from "vue";
 
 import { API_KEY, HEARTBEAT_KEY } from "@/constants";
+import type { DOMTimeStamp } from "@/types/data";
 
 const heartbeat = inject(HEARTBEAT_KEY)!;
 
@@ -48,7 +49,7 @@ watchEffect(() => {
 			Temporal.Duration.from({ milliseconds: timer.timeLeft }),
 		);
 	}
-	let updateHandle: number;
+	let updateHandle: DOMTimeStamp;
 	function update() {
 		let timer = heartbeat.timer;
 		if (timer.state != "running") {
@@ -60,7 +61,7 @@ watchEffect(() => {
 		let then = Temporal.Instant.fromEpochMilliseconds(timer.endTime);
 		setTimerDisplay(then.since(now));
 	}
-	updateHandle = setInterval(update, 1000);
+	updateHandle = window.setInterval(update, 1000);
 	update();
 	onWatcherCleanup(() => window.clearInterval(updateHandle));
 });

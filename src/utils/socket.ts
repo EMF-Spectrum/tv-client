@@ -28,7 +28,7 @@ function asyncSleep(time: number): Promise<void> {
 
 const TIMEOUT = 100;
 
-export class Socket extends (EventEmitter as {
+export class Socket extends (EventEmitter as any as {
 	new (): SpectrumGameEventEmitter;
 }) {
 	private socket?: WebSocket;
