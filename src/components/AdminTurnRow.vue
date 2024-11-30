@@ -76,6 +76,8 @@ function onAddPhase() {
 </template>
 
 <style lang="scss">
+@use "sass:color";
+
 .game-turn {
 	// Remove the double border for repeated tbodys
 	.table tbody + & {
@@ -85,10 +87,18 @@ function onAddPhase() {
 	$old-bs-info-colour: #d9edf7;
 
 	> .heading > * {
-		background-color: darken($old-bs-info-colour, 15%);
+		background-color: color.adjust(
+			$old-bs-info-colour,
+			$lightness: -15%,
+			$space: hsl
+		);
 
 		[data-bs-theme="dark"] & {
-			background-color: darken($old-bs-info-colour, 40%);
+			background-color: color.adjust(
+				$old-bs-info-colour,
+				$lightness: -40%,
+				$space: hsl
+			);
 		}
 	}
 

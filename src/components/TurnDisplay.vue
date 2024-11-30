@@ -37,12 +37,16 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 
 <style lang="scss">
 @use "@/assets/sizes";
+@use "sass:math";
+
+$half-turn: math.div(sizes.$turn-size, 2);
+
 .turn-holder {
 	margin: sizes.$turn-padding;
 
 	transform-style: preserve-3d;
 	position: absolute;
-	transform: translateZ(-(sizes.$turn-size / 2));
+	transform: translateZ(-($half-turn));
 	// perspective: 600px;
 	// perspective-origin: center;
 	width: sizes.$turn-size;
@@ -58,7 +62,7 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 		// height: 100%;
 		border: 10px solid black;
 		position: absolute;
-		transform: rotateY(0deg) translateZ((sizes.$turn-size / 2));
+		transform: rotateY(0deg) translateZ(($half-turn));
 		transform-style: preserve-3d;
 	}
 
@@ -69,16 +73,16 @@ const heartbeat = inject(HEARTBEAT_KEY)!;
 	}
 
 	&.v-enter-from {
-		transform: rotateY(90deg) translateZ((sizes.$turn-size / 2));
+		transform: rotateY(90deg) translateZ(($half-turn));
 	}
 
 	&.v-enter-to,
 	&.v-leave-from {
-		transform: rotateY(0deg) translateZ((sizes.$turn-size / 2));
+		transform: rotateY(0deg) translateZ(($half-turn));
 	}
 
 	&.v-leave-to {
-		transform: rotateY(-90deg) translateZ((sizes.$turn-size / 2));
+		transform: rotateY(-90deg) translateZ(($half-turn));
 	}
 
 	> .label {
